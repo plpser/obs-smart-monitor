@@ -1,0 +1,46 @@
+# 依赖文件
+node_modules/
+vendor/
+.env
+
+# 编译输出
+dist/
+build/
+*.exe
+*.dll
+*.so
+*.dylib
+
+# 日志文件
+*.log
+logs/
+
+# 临时文件
+*.tmp
+*.temp
+*.swp
+*.swo
+*~
+
+# IDE配置文件
+.vscode/
+.idea/
+*.sublime-*
+
+# 操作系统生成的文件
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# 备份文件
+*.bak
+*.backup
+*.old
+
+# 测试覆盖率报告
+coverage/
+.nyc_output/
+
+# 其他
+.cache/
+.temp/
