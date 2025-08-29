@@ -128,7 +128,7 @@ class OBSManager:
             return []
     
     def update_scene_config(self):
-        """更新场景配置到配置文件"""
+        """更新场景配置到配置文件（保持现有的自定义切换命令）"""
         if not self.config:
             print("❌ 配置文件未加载")
             return False
@@ -141,12 +141,24 @@ class OBSManager:
         if not scene_names:
             return False
         
-        # 更新配置（使用新格式）
+        # 获取现有的场景配置，保持用户自定义的切换命令
+        existing_scenes = self.config["scene_settings"].get("scenes", {})
         scenes_config = {}
+        
         for i, scene_name in enumerate(scene_names, 1):
+            # 查找现有配置中是否有这个场景的自定义切换命令
+            existing_switch_cmd = None
+            for existing_id, existing_info in existing_scenes.items():
+                if existing_info.get("场景名称") == scene_name:
+                    existing_switch_cmd = existing_info.get("切换命令")
+                    break
+            
+            # 如果有自定义切换命令就保持，否则使用默认序号
+            switch_cmd = existing_switch_cmd if existing_switch_cmd is not None else str(i)
+            
             scenes_config[str(i)] = {
                 "场景名称": scene_name,
-                "切换命令": str(i),
+                "切换命令": switch_cmd,
                 "number": i,
                 "enabled": True,
                 "description": f"场景{i}: {scene_name}"
@@ -162,7 +174,7 @@ class OBSManager:
                 print(f"🔄 默认场景已更新为: {scene_names[0]}")
         
         if self.save_config():
-            print(f"✅ 场景配置已更新到 {self.config_path}")
+            print(f"✅ 场景配置已更新到 {self.config_path}（保持自定义切换命令）")
             return True
         
         return False
