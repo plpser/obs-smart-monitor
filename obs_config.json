@@ -1,0 +1,80 @@
+{
+    "obs_connection": {
+        "host": "192.168.10.110",
+        "port": 4455,
+        "password": "123456",
+        "connect_timeout": 5,
+        "reconnect_interval": 10
+    },
+    "scene_settings": {
+        "default_scene": "默认-0",
+        "switch_duration": 120,
+        "scenes": {
+            "1": {
+                "name": "录制",
+                "number": 1,
+                "enabled": true,
+                "description": "场景1: 录制"
+            },
+            "2": {
+                "name": "8米项链108颗-8",
+                "number": 2,
+                "enabled": true,
+                "description": "场景2: 8米项链108颗-8"
+            },
+            "3": {
+                "name": "6米项链108颗-7",
+                "number": 3,
+                "enabled": true,
+                "description": "场景3: 6米项链108颗-7"
+            },
+            "4": {
+                "name": "4米多圈-6",
+                "number": 4,
+                "enabled": true,
+                "description": "场景4: 4米多圈-6"
+            },
+            "5": {
+                "name": "卡14-5",
+                "number": 5,
+                "enabled": true,
+                "description": "场景5: 卡14-5"
+            },
+            "6": {
+                "name": "卡12-4",
+                "number": 6,
+                "enabled": true,
+                "description": "场景6: 卡12-4"
+            },
+            "7": {
+                "name": "10",
+                "number": 7,
+                "enabled": true,
+                "description": "场景7: 10"
+            },
+            "8": {
+                "name": "8",
+                "number": 8,
+                "enabled": true,
+                "description": "场景8: 8"
+            },
+            "9": {
+                "name": "卡6-1",
+                "number": 9,
+                "enabled": true,
+                "description": "场景9: 卡6-1"
+            },
+            "10": {
+                "name": "默认-0",
+                "number": 10,
+                "enabled": true,
+                "description": "场景10: 默认-0"
+            }
+        }
+    },
+    "monitoring": {
+        "enabled": true,
+        "auto_switch": true,
+        "debug_mode": false
+    }
+}

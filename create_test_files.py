@@ -26,9 +26,19 @@ def create_test_files():
         with open(filepath, 'w', encoding='utf-8') as f:
             f.write(f"这是测试文件 {filename}\n")
             f.write(f"创建时间: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n")
-            f.write("用户A: 大家好\n")
-            f.write("用户B: 你好\n")
-            f.write(f"这是第{i+1}个测试文件的最后一行\n")
+            f.write("2025-08-29 22:50:15[用户发言]张三： 大家好\n")
+            f.write("2025-08-29 22:51:30[用户发言]李四： 你好张三\n")
+            f.write("2025-08-29 22:52:45[用户发言]王五： 今天天气不错\n")
+            # 添加一些包含"看"字和数字的测试内容
+            f.write(f"2025-08-29 22:53:0{i+1}[用户发言]测试用户： 看{100+i*10}号房间\n")
+            # 添加更多测试案例
+            test_cases = [
+                f"2025-08-29 22:54:0{i+1}[用户发言]用户A： 我想看{i+1}集\n",
+                f"2025-08-29 22:55:0{i+1}[用户发言]用户B： 看看这个\n",
+                f"2025-08-29 22:56:0{i+1}[用户发言]用户C： 看{i+2}.5个小时\n"
+            ]
+            for test_case in test_cases:
+                f.write(test_case)
         
         # 设置不同的创建时间（让最后一个文件是最新的）
         if i < len(files) - 1:
