@@ -24,6 +24,7 @@ class OBSManager:
         self.switch_end_time = None
         self.switch_lock = threading.Lock()
         self.switch_timer = None
+        self.delay_timer = None  # 延迟切换定时器
         
     def load_config(self):
         """加载配置文件"""
@@ -140,11 +141,12 @@ class OBSManager:
         if not scene_names:
             return False
         
-        # 更新配置
+        # 更新配置（使用新格式）
         scenes_config = {}
         for i, scene_name in enumerate(scene_names, 1):
             scenes_config[str(i)] = {
-                "name": scene_name,
+                "场景名称": scene_name,
+                "切换命令": str(i),
                 "number": i,
                 "enabled": True,
                 "description": f"场景{i}: {scene_name}"
@@ -181,7 +183,7 @@ class OBSManager:
             return False
     
     def switch_scene_by_number(self, number):
-        """根据数字切换场景"""
+        """根据数字切换场景（支持延迟切换）"""
         if not self.config:
             print("❌ 配置文件未加载")
             return False
@@ -193,20 +195,54 @@ class OBSManager:
                 print(f"⏳ 场景切换冷却中，剩余 {remaining:.0f} 秒")
                 return False
             
+            # 取消之前的延迟定时器
+            if self.delay_timer:
+                self.delay_timer.cancel()
+                print("⏹️ 取消之前的延迟切换")
+            
             # 查找对应的场景
             scenes = self.config["scene_settings"]["scenes"]
             target_scene = None
             
             for scene_id, scene_info in scenes.items():
-                if scene_info.get("number") == int(number) and scene_info.get("enabled", True):
-                    target_scene = scene_info["name"]
+                # 支持新格式：通过“切换命令”匹配
+                if "切换命令" in scene_info and scene_info["切换命令"] == str(number) and scene_info.get("enabled", True):
+                    target_scene = scene_info.get("场景名称", scene_info.get("name"))
+                    break
+                # 兼容旧格式：通过number字段匹配
+                elif scene_info.get("number") == int(number) and scene_info.get("enabled", True):
+                    target_scene = scene_info.get("场景名称", scene_info.get("name"))
                     break
             
             if not target_scene:
-                print(f"❌ 未找到编号 {number} 对应的场景")
+                print(f"❌ 未找到切换命令 {number} 对应的场景")
                 return False
             
-            # 切换场景
+            # 获取延迟参数
+            delay_seconds = self.config["scene_settings"].get("switch_delay", 5)
+            
+            if delay_seconds > 0:
+                print(f"⏰ 检测到切换命令 {number}，{delay_seconds}秒后切换到场景: {target_scene}")
+                
+                # 设置延迟定时器
+                self.delay_timer = threading.Timer(delay_seconds, self._delayed_switch, args=[target_scene, number])
+                self.delay_timer.start()
+                
+                return True
+            else:
+                # 无延迟，直接切换
+                return self._delayed_switch(target_scene, number)
+    
+    def _delayed_switch(self, target_scene, number):
+        """延迟切换的实际执行方法"""
+        with self.switch_lock:
+            # 再次检查是否在冷却期
+            if self.switch_end_time and datetime.now() < self.switch_end_time:
+                remaining = (self.switch_end_time - datetime.now()).total_seconds()
+                print(f"⏳ 场景切换冷却中，取消延迟切换，剩余 {remaining:.0f} 秒")
+                return False
+            
+            # 执行场景切换
             if self.switch_scene(target_scene):
                 # 设置切换时间和定时器
                 duration = self.config["scene_settings"]["switch_duration"]
@@ -251,7 +287,7 @@ class OBSManager:
         return 0
     
     def print_scene_mapping(self):
-        """打印场景映射信息"""
+        """打印场景映射信息（支持新配置格式）"""
         if not self.config:
             print("❌ 配置文件未加载")
             return
@@ -262,21 +298,30 @@ class OBSManager:
             return
         
         print("\n🎬 场景映射表:")
-        print("   编号 | 场景名称 | 状态")
-        print("   ----|---------|----")
+        print("   切换命令 | 场景名称        | 编号 | 状态")
+        print("   -------|-------------|----|----|")
         for scene_id, scene_info in scenes.items():
             status = "✅启用" if scene_info.get("enabled", True) else "❌禁用"
-            print(f"   {scene_info['number']:^4} | {scene_info['name']:<15} | {status}")
+            # 支持新旧两种配置格式
+            switch_cmd = scene_info.get("切换命令", str(scene_info.get("number", "")))
+            scene_name = scene_info.get("场景名称", scene_info.get("name", ""))
+            scene_number = scene_info.get("number", "")
+            
+            print(f"   {switch_cmd:^7} | {scene_name:<11} | {scene_number:^2} | {status}")
         
         default_scene = self.config["scene_settings"]["default_scene"]
         duration = self.config["scene_settings"]["switch_duration"]
+        delay = self.config["scene_settings"].get("switch_delay", 5)
         print(f"\n🏠 默认场景: {default_scene}")
         print(f"⏰ 切换保持时间: {duration}秒")
+        print(f"⏳ 切换延迟时间: {delay}秒")
     
     def __del__(self):
         """析构函数，确保断开连接"""
         if self.switch_timer:
             self.switch_timer.cancel()
+        if self.delay_timer:
+            self.delay_timer.cancel()
         self.disconnect()
 
 def main():

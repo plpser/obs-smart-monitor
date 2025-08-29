@@ -105,7 +105,9 @@ class FileMonitor(FileSystemEventHandler):
     def _extract_number_with_kan(self, content):
         """
         检测用户发言内容中是否同时包含"看"字和数字
-        如果满足条件，返回提取到的数字；否则返回None
+        支持两种规则：
+        1. 包含"看"字和"108"字符，且还有其他数字：返回其他数字+108
+        2. 包含"看"字和数字（普通情况）：返回提取到的数字
         
         :param content: 用户发言的纯净内容
         :return: 提取到的数字字符串或None
@@ -119,7 +121,32 @@ class FileMonitor(FileSystemEventHandler):
         if "看" not in content:
             return None
         
-        # 提取所有数字（包括整数和小数）
+        # 规则1: 检查是否包含"看"字和"108"字符
+        if "108" in content:
+            # 提取所有数字（包括整数和小数）
+            number_pattern = r'\d+(?:\.\d+)?'
+            numbers = re.findall(number_pattern, content)
+            
+            # 过滤掉"108"，查找其他数字
+            other_numbers = [num for num in numbers if num != "108"]
+            
+            if other_numbers:
+                # 返回第一个其他数字+108
+                try:
+                    base_number = float(other_numbers[0])
+                    result = base_number + 108
+                    # 如果结果是整数，返回整数字符串
+                    if result.is_integer():
+                        return str(int(result))
+                    else:
+                        return str(result)
+                except ValueError:
+                    return None
+            else:
+                # 只有108，没有其他数字
+                return None
+        
+        # 规则2: 普通情况，提取所有数字（包括整数和小数）
         number_pattern = r'\d+(?:\.\d+)?'
         numbers = re.findall(number_pattern, content)
         
@@ -156,7 +183,12 @@ class FileMonitor(FileSystemEventHandler):
                 else:
                     success = self.obs_manager.switch_scene_by_number(extracted_number)
                     if success:
-                        self._print_obs_status(f"场景已切换到编号 {extracted_number}", "success")
+                        # 检查是否有延迟设置
+                        delay = self.obs_manager.config["scene_settings"].get("switch_delay", 5)
+                        if delay > 0:
+                            self._print_obs_status(f"场景切换命令已发出，{delay}秒后执行", "info")
+                        else:
+                            self._print_obs_status(f"场景已切换到编号 {extracted_number}", "success")
                     else:
                         self._print_obs_status(f"无法切换到编号 {extracted_number} 的场景", "error")
             elif self.obs_manager and not self.obs_manager.connected:

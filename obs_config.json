@@ -7,68 +7,72 @@
         "reconnect_interval": 10
     },
     "scene_settings": {
-        "default_scene": "默认-0",
+        "default_scene": "默认",
         "switch_duration": 120,
+        "switch_delay": 5,
         "scenes": {
             "1": {
-                "name": "录制",
+                "场景名称": "8米项链108颗",
+                "切换命令": "116",
                 "number": 1,
                 "enabled": true,
-                "description": "场景1: 录制"
+                "description": "场景1: 8米项链108颗"
             },
             "2": {
-                "name": "8米项链108颗-8",
+                "场景名称": "6米项链108颗",
+                "切换命令": "114",
                 "number": 2,
                 "enabled": true,
-                "description": "场景2: 8米项链108颗-8"
+                "description": "场景2: 6米项链108颗"
             },
             "3": {
-                "name": "6米项链108颗-7",
+                "场景名称": "4多圈",
+                "切换命令": "4",
                 "number": 3,
                 "enabled": true,
-                "description": "场景3: 6米项链108颗-7"
+                "description": "场景3: 4多圈"
             },
             "4": {
-                "name": "4米多圈-6",
+                "场景名称": "14",
+                "切换命令": "14",
                 "number": 4,
                 "enabled": true,
-                "description": "场景4: 4米多圈-6"
+                "description": "场景4: 14"
             },
             "5": {
-                "name": "14",
+                "场景名称": "12",
+                "切换命令": "12",
                 "number": 5,
                 "enabled": true,
-                "description": "场景5: 14"
+                "description": "场景5: 12"
             },
             "6": {
-                "name": "12",
+                "场景名称": "10",
+                "切换命令": "10",
                 "number": 6,
                 "enabled": true,
-                "description": "场景6: 12"
+                "description": "场景6: 10"
             },
             "7": {
-                "name": "10",
+                "场景名称": "8",
+                "切换命令": "8",
                 "number": 7,
                 "enabled": true,
-                "description": "场景7: 10"
+                "description": "场景7: 8"
             },
             "8": {
-                "name": "8",
+                "场景名称": "6",
+                "切换命令": "6",
                 "number": 8,
                 "enabled": true,
-                "description": "场景8: 8"
+                "description": "场景8: 6"
             },
             "9": {
-                "name": "卡6",
+                "场景名称": "默认",
+                "切换命令": "0",
                 "number": 9,
                 "enabled": true,
-                "description": "场景9: 卡6"
-            },
-            "10": {
-                "name": "默认-0",
-                "number": 10,
-                "enabled": true,
-                "description": "场景10: 默认-0"
+                "description": "场景9: 默认"
             }
         }
     },
