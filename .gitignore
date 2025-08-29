@@ -3,6 +3,13 @@ node_modules/
 vendor/
 .env
 
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+
 # 编译输出
 dist/
 build/
@@ -39,7 +46,23 @@ desktop.ini
 
 # 测试覆盖率报告
 coverage/
+*.coverage
+
+# 测试文件
+test_logs/
+test*.py
+debug*.py
+*.test.txt
+
+# OBS配置备份
+obs_config.json.bak
+coverage/
 .nyc_output/
+
+# 测试文件和调试文件
+test_logs/
+debug_*.py
+test_*.txt
 
 # 其他
 .cache/

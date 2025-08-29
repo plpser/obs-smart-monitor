@@ -35,16 +35,16 @@
                 "description": "场景4: 4米多圈-6"
             },
             "5": {
-                "name": "卡14-5",
+                "name": "14",
                 "number": 5,
                 "enabled": true,
-                "description": "场景5: 卡14-5"
+                "description": "场景5: 14"
             },
             "6": {
-                "name": "卡12-4",
+                "name": "12",
                 "number": 6,
                 "enabled": true,
-                "description": "场景6: 卡12-4"
+                "description": "场景6: 12"
             },
             "7": {
                 "name": "10",
@@ -59,10 +59,10 @@
                 "description": "场景8: 8"
             },
             "9": {
-                "name": "卡6-1",
+                "name": "卡6",
                 "number": 9,
                 "enabled": true,
-                "description": "场景9: 卡6-1"
+                "description": "场景9: 卡6"
             },
             "10": {
                 "name": "默认-0",

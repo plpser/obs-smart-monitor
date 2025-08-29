@@ -79,42 +79,6 @@ class FileMonitor(FileSystemEventHandler):
         
         # 匹配模式1: 2025-08-29 22:53:09[用户发言]t： 有黄水吗
         import re
-        pattern1 = r'\d{4}-\d{2}-\d{2}\s+\d{2}:\d{2}:\d{2}\[\u7528\u6237\u53d1\u8a00\][^\uff1a]*\uff1a\s*(.*)'
-        match1 = re.match(pattern1, original_line)
-        if match1:
-            content = match1.group(1).strip()
-            return content if content else "空内容"
-        
-        # 匹配模式2: [用户发言]用户名： 内容
-        pattern2 = r'\[\u7528\u6237\u53d1\u8a00\][^\uff1a]*\uff1a\s*(.*)'
-        match2 = re.match(pattern2, original_line)
-        if match2:
-            content = match2.group(1).strip()
-            return content if content else "空内容"
-        
-        # 匹配模式3: 时间戳 用户名： 内容
-        pattern3 = r'\d{2}:\d{2}:\d{2}\s+[^\uff1a]*\uff1a\s*(.*)'
-        match3 = re.match(pattern3, original_line)
-        if match3:
-            content = match3.group(1).strip()
-            return content if content else "空内容"
-        
-        # 如果没有匹配到任何模式，返回原始内容
-        return original_line
-        """
-        提取用户发言内容，去除时间戳和用户标识等前缀
-        支持多种格式：
-        - 2025-08-29 22:53:09[用户发言]t： 有黄水吗
-        - [用户发言]用户名： 内容
-        - 时间 用户名： 内容
-        """
-        if not line or not line.strip():
-            return "空内容"
-        
-        original_line = line.strip()
-        
-        # 匹配模式1: 2025-08-29 22:53:09[用户发言]t： 有黄水吗
-        import re
         pattern1 = r'\d{4}-\d{2}-\d{2}\s+\d{2}:\d{2}:\d{2}\[用户发言\][^：]*：\s*(.*)'
         match1 = re.match(pattern1, original_line)
         if match1:
@@ -432,7 +396,7 @@ def timeout_input(prompt, timeout, default_value):
         import threading
         import time
         
-        result = [None]
+        result = [None]  # type: list[str | None]
         
         def get_input():
             try:
@@ -470,8 +434,8 @@ def main():
     # 询问是否启用OBS功能
     while True:
         try:
-            obs_choice = input("🎬 是否启用OBS自动场景切换功能? (y/n): ").strip().lower()
-            if obs_choice in ['y', 'yes', '是']:
+            obs_choice = timeout_input("🎬 是否启用OBS自动场景切换功能? (y/n) [默认y, 10秒]: ", 10, "y")
+            if obs_choice.lower() in ['y', 'yes', '是', '']:
                 if obs_manager.connect():
                     # 更新场景配置
                     obs_manager.update_scene_config()
@@ -481,7 +445,7 @@ def main():
                     print("⚠️ OBS连接失败，将禁用自动切换功能")
                     obs_manager = None
                 break
-            elif obs_choice in ['n', 'no', '否']:
+            elif obs_choice.lower() in ['n', 'no', '否']:
                 print("❌ OBS功能已禁用")
                 obs_manager = None
                 break
@@ -497,7 +461,7 @@ def main():
     
     while True:
         try:
-            choice = input("\n➡️ 请输入选择 (1/2): ").strip()
+            choice = timeout_input("\n➡️ 请输入选择 (1/2) [默认1, 3秒]: ", 3, "1")
             if choice == "1":
                 log_directory = actual_log_directory
                 print(f"\n✅ 已选择实际模式: {log_directory}")
@@ -507,8 +471,8 @@ def main():
                 # 检查测试目录是否存在
                 if not os.path.exists(log_directory):
                     print(f"\n⚠️ 测试目录 {log_directory} 不存在")
-                    create_test = input("🛠️ 是否创建测试文件? (y/n): ").strip().lower()
-                    if create_test == 'y':
+                    create_test = timeout_input("🛠️ 是否创建测试文件? (y/n): ", 5, "n")
+                    if create_test.lower().startswith('y'):
                         try:
                             import subprocess
                             subprocess.run(["python", "create_test_files.py"], check=True)
