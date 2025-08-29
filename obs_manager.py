@@ -221,10 +221,16 @@ class OBSManager:
                 if "切换命令" in scene_info and scene_info["切换命令"] == str(number) and scene_info.get("enabled", True):
                     target_scene = scene_info.get("场景名称", scene_info.get("name"))
                     break
-                # 兼容旧格式：通过number字段匹配
-                elif scene_info.get("number") == int(number) and scene_info.get("enabled", True):
-                    target_scene = scene_info.get("场景名称", scene_info.get("name"))
-                    break
+                # 兼容旧格式：通过number字段匹配（只处理整数）
+                elif scene_info.get("number") and scene_info.get("enabled", True):
+                    try:
+                        # 只有当number是整数时才进行比较
+                        if "." not in str(number) and scene_info.get("number") == int(number):
+                            target_scene = scene_info.get("场景名称", scene_info.get("name"))
+                            break
+                    except ValueError:
+                        # 如果number不能转换为整数，跳过这个匹配
+                        continue
             
             if not target_scene:
                 print(f"❌ 未找到切换命令 {number} 对应的场景")

@@ -135,6 +135,14 @@ class FileMonitor(FileSystemEventHandler):
                 try:
                     base_number = float(other_numbers[0])
                     result = base_number + 108
+                    
+                    # 特殊处理：如果结果是108.8，对应8米项链108颗场景，返回116
+                    if result == 108.8:
+                        return "116"
+                    # 特殊处理：如果结果是108.6，对应6米项链108颗场景，返回114  
+                    elif result == 108.6:
+                        return "114"
+                    
                     # 如果结果是整数，返回整数字符串
                     if result.is_integer():
                         return str(int(result))
