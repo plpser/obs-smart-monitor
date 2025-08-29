@@ -54,6 +54,14 @@ test*.py
 debug*.py
 *.test.txt
 
+# 打包生成文件
+build/
+dist/
+*.spec
+FileMonitor_Release_*/
+*.zip
+*.exe
+
 # OBS配置备份
 obs_config.json.bak
 coverage/

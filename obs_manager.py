@@ -37,6 +37,19 @@ class OBSManager:
             print(f"❌ 配置文件格式错误: {e}")
             return None
     
+    def reload_config(self):
+        """重新加载配置文件"""
+        old_config = self.config
+        self.config = self.load_config()
+        
+        if self.config:
+            print(f"✅ 配置文件已重新加载")
+            return True
+        else:
+            print(f"❌ 配置文件重新加载失败，恢复旧配置")
+            self.config = old_config
+            return False
+    
     def save_config(self):
         """保存配置文件"""
         try:
