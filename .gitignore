@@ -75,3 +75,9 @@ test_*.txt
 # 其他
 .cache/
 .temp/
+
+# 数据库文件
+*.db
+switch_records.db
+test_switch_records.db
+integration_test.db

@@ -9,6 +9,7 @@ def install_dependencies():
     dependencies = [
         "watchdog",      # 文件监控
         "obsws-python",  # OBS WebSocket客户端
+        "schedule",      # 定时任务调度器
     ]
     
     print("🔧 开始安装依赖包...")
@@ -41,6 +42,13 @@ def check_dependencies():
         print("✅ obsws-python 已安装")
     except ImportError:
         print("❌ obsws-python 未安装")
+        return False
+    
+    try:
+        import schedule
+        print("✅ schedule 已安装")
+    except ImportError:
+        print("❌ schedule 未安装")
         return False
     
     print("🎉 所有依赖包都已正确安装！")

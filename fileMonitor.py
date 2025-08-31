@@ -189,7 +189,7 @@ class FileMonitor(FileSystemEventHandler):
                     remaining = self.obs_manager.get_cooldown_remaining()
                     self._print_obs_status(f"场景切换冷却中，剩余 {remaining:.0f} 秒", "warning")
                 else:
-                    success = self.obs_manager.switch_scene_by_number(extracted_number)
+                    success = self.obs_manager.switch_scene_by_number(extracted_number, clean_content)
                     if success:
                         # 检查是否有延迟设置
                         delay = self.obs_manager.config["scene_settings"].get("switch_delay", 5)
@@ -335,6 +335,10 @@ class FileMonitor(FileSystemEventHandler):
         try:
             print("\n" + "=" * 60)
             print("🚀 文件监控已启动")
+            
+            if self.obs_manager and self.obs_manager.statistics:
+                print(f"\n📈 统计系统已初始化 - 本次启动: 0 次切换")
+            
             print("\n📈 监控参数:")
             print(f"   • 内容变化检测: 实时 ({self.content_check_interval}秒间隔)")
             print(f"   • 新文件检测: 每 {self.check_interval//60} 分钟")
@@ -342,9 +346,10 @@ class FileMonitor(FileSystemEventHandler):
             print("\n📝 功能说明:")
             print("   • 监控文件内容变化")
             print("   • 提取纯净用户发言内容")
-            print("   • 检测“看”字和数字组合")
+            print("   • 检测'看'字和数字组合")
             print("   • 监控文件删除并自动切换")
             print("   • 定期检查更新文件")
+            print("   • 统计切换次数并保存到数据库")
             print("\n⏹️ 按 Ctrl+C 停止监控")
             print("=" * 60)
             
@@ -395,10 +400,10 @@ def find_latest_user_speech_log(log_directory):
         modify_time = datetime.fromtimestamp(os.path.getmtime(latest_file))
         
         print(f"\n🔍 找到最新的用户发言记录文件:")
-        print(f"   📁 文件名: {os.path.basename(latest_file)}")
-        print(f"   💾 文件大小: {file_size:,} 字节")
-        print(f"   🕰️ 创建时间: {create_time.strftime('%Y-%m-%d %H:%M:%S')}")
-        print(f"   📝 修改时间: {modify_time.strftime('%Y-%m-%d %H:%M:%S')}")
+        print(f"   📁 【文件名 】: {os.path.basename(latest_file)}")
+        print(f"   💾 【文件大小】: {file_size:,} 字节")
+        print(f"   🕰️ 【创建时间】: {create_time.strftime('%Y-%m-%d %H:%M:%S')}")
+        print(f"   📝 【修改时间】: {modify_time.strftime('%Y-%m-%d %H:%M:%S')}")
         
         return latest_file
         
@@ -470,6 +475,19 @@ def main():
     # 初始化OBS管理器
     print("\n🎥 初始化OBS管理器...")
     obs_manager = OBSManager()
+    
+    # 显示统计信息（如果有统计系统）
+    if obs_manager.statistics:
+        print("\n📈 统计信息:")
+        print(f"   🎆 历史总切换次数: {obs_manager.statistics.get_total_count():,} 次")
+        print(f"   📅 今日切换次数: {obs_manager.statistics.get_today_count():,} 次")
+        print(f"   ⏰ 当前小时: {obs_manager.statistics.get_current_hour_count():,} 次")
+        print(f"   📋 每整点显示统计，所有记录保存在数据库中")
+        
+        # 显示最近的切换记录
+        if obs_manager.statistics.get_total_count() > 0:
+            print("\n📋 最近的切换记录:")
+            obs_manager.statistics.print_recent_records(3)
     
     # 询问是否启用OBS功能
     while True:
@@ -572,3 +590,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+

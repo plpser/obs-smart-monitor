@@ -8,6 +8,12 @@ except ImportError:
     print("⚠️ 需要安装 obsws-python: pip install obsws-python")
     obs = None
 
+try:
+    from switch_statistics import SwitchStatistics
+except ImportError:
+    print("⚠️ 统计模块导入失败，将禁用统计功能")
+    SwitchStatistics = None
+
 class OBSManager:
     """OBS WebSocket管理器"""
     
@@ -25,6 +31,15 @@ class OBSManager:
         self.switch_lock = threading.Lock()
         self.switch_timer = None
         self.delay_timer = None  # 延迟切换定时器
+        
+        # 初始化统计系统
+        self.statistics = None
+        if SwitchStatistics:
+            try:
+                self.statistics = SwitchStatistics()
+            except Exception as e:
+                print(f"⚠️ 统计系统初始化失败: {e}")
+                self.statistics = None
         
     def load_config(self):
         """加载配置文件"""
@@ -194,7 +209,7 @@ class OBSManager:
             print(f"❌ 切换场景失败: {e}")
             return False
     
-    def switch_scene_by_number(self, number):
+    def switch_scene_by_number(self, number, user_content=""):
         """根据数字切换场景（支持延迟切换）"""
         if not self.config:
             print("❌ 配置文件未加载")
@@ -243,15 +258,15 @@ class OBSManager:
                 print(f"⏰ 检测到切换命令 {number}，{delay_seconds}秒后切换到场景: {target_scene}")
                 
                 # 设置延迟定时器
-                self.delay_timer = threading.Timer(delay_seconds, self._delayed_switch, args=[target_scene, number])
+                self.delay_timer = threading.Timer(delay_seconds, self._delayed_switch, args=[target_scene, number, user_content])
                 self.delay_timer.start()
                 
                 return True
             else:
                 # 无延迟，直接切换
-                return self._delayed_switch(target_scene, number)
+                return self._delayed_switch(target_scene, number, user_content)
     
-    def _delayed_switch(self, target_scene, number):
+    def _delayed_switch(self, target_scene, number, user_content=""):
         """延迟切换的实际执行方法"""
         with self.switch_lock:
             # 再次检查是否在冷却期
@@ -262,6 +277,13 @@ class OBSManager:
             
             # 执行场景切换
             if self.switch_scene(target_scene):
+                # 记录统计信息
+                if self.statistics:
+                    try:
+                        self.statistics.record_switch(user_content, number, target_scene)
+                    except Exception as e:
+                        print(f"⚠️ 记录统计失败: {e}")
+                
                 # 设置切换时间和定时器
                 duration = self.config["scene_settings"]["switch_duration"]
                 self.switch_end_time = datetime.now() + timedelta(seconds=duration)
