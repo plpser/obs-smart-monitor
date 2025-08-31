@@ -14,6 +14,12 @@ except ImportError:
     print("⚠️ 统计模块导入失败，将禁用统计功能")
     SwitchStatistics = None
 
+try:
+    from source_manager import SourceManager
+except ImportError:
+    print("⚠️ 源管理模块导入失败，将禁用源管理功能")
+    SourceManager = None
+
 class OBSManager:
     """OBS WebSocket管理器"""
     
@@ -40,6 +46,15 @@ class OBSManager:
             except Exception as e:
                 print(f"⚠️ 统计系统初始化失败: {e}")
                 self.statistics = None
+                
+        # 初始化源管理器
+        self.source_manager = None
+        if SourceManager:
+            try:
+                self.source_manager = SourceManager()
+            except Exception as e:
+                print(f"⚠️ 源管理器初始化失败: {e}")
+                self.source_manager = None
         
     def load_config(self):
         """加载配置文件"""
@@ -108,6 +123,11 @@ class OBSManager:
             self.current_scene = current_scene_resp.current_program_scene_name
             print(f"   🎬 当前场景: {self.current_scene}")
             
+            # 设置源管理器的OBS客户端
+            if self.source_manager:
+                self.source_manager.set_obs_client(self.ws)
+                print(f"   📡 源管理器已连接")
+            
             return True
             
         except Exception as e:
@@ -117,6 +137,10 @@ class OBSManager:
     
     def disconnect(self):
         """断开OBS连接"""
+        # 停止源管理器监控
+        if self.source_manager:
+            self.source_manager.stop_source_monitoring()
+            
         if self.ws:
             try:
                 self.ws.disconnect()
@@ -356,6 +380,61 @@ class OBSManager:
         print(f"⏰ 切换保持时间: {duration}秒")
         print(f"⏳ 切换延迟时间: {delay}秒")
     
+    def get_sources_info(self):
+        """获取所有场景的源信息"""
+        if not self.source_manager:
+            print("❌ 源管理器未初始化")
+            return {}
+        
+        return self.source_manager.get_all_scenes_sources()
+    
+    def get_vlc_sources_info(self):
+        """获取VLC源信息"""
+        if not self.source_manager:
+            print("❌ 源管理器未初始化")
+            return {}
+        
+        return self.source_manager.get_vlc_sources_info()
+    
+    def print_sources_summary(self):
+        """打印源信息摘要"""
+        if not self.source_manager:
+            print("❌ 源管理器未初始化")
+            return
+        
+        self.source_manager.print_sources_summary()
+    
+    def print_vlc_sources_detail(self):
+        """打印VLC源详细信息"""
+        if not self.source_manager:
+            print("❌ 源管理器未初始化")
+            return
+        
+        self.source_manager.print_vlc_sources_detail()
+    
+    def start_source_monitoring(self):
+        """开始源监控"""
+        if not self.source_manager:
+            print("❌ 源管理器未初始化")
+            return
+        
+        self.source_manager.start_source_monitoring()
+    
+    def stop_source_monitoring(self):
+        """停止源监控"""
+        if not self.source_manager:
+            return
+        
+        self.source_manager.stop_source_monitoring()
+    
+    def export_sources_info(self, output_file: str = "sources_info.json"):
+        """导出源信息"""
+        if not self.source_manager:
+            print("❌ 源管理器未初始化")
+            return
+        
+        self.source_manager.export_sources_info(output_file)
+    
     def __del__(self):
         """析构函数，确保断开连接"""
         if self.switch_timer:
@@ -378,6 +457,20 @@ def main():
         
         # 显示场景映射
         manager.print_scene_mapping()
+        
+        # 测试源管理功能
+        if manager.source_manager:
+            print(f"\n📡 源管理功能测试")
+            print("=" * 50)
+            
+            # 获取并显示源信息
+            manager.print_sources_summary()
+            
+            # 获取VLC源信息
+            manager.print_vlc_sources_detail()
+            
+            print(f"\n💾 导出源信息...")
+            manager.export_sources_info("obs_sources_info.json")
         
         # 测试场景切换
         print(f"\n📝 测试功能（输入场景编号进行切换，输入0退出）:")
