@@ -1,0 +1,609 @@
+{
+  "timestamp": "2025-08-31T12:49:28.532009",
+  "scenes_sources": {
+    "8米项链108颗": [
+      {
+        "item_id": 2,
+        "source_name": "图像 8",
+        "source_type": "image_source",
+        "source_kind": null,
+        "enabled": true,
+        "visible": true,
+        "settings": {
+          "file": "E:/AI直播素材/不要乱存和删这个文件_剪辑视频/底图.png"
+        },
+        "properties": {}
+      },
+      {
+        "item_id": 3,
+        "source_name": "VLC 视频源",
+        "source_type": "vlc_source",
+        "source_kind": null,
+        "enabled": true,
+        "visible": true,
+        "settings": {
+          "playlist": [
+            {
+              "hidden": false,
+              "selected": false,
+              "uuid": "84b66ac0-802e-47ab-9841-f0e19a275798",
+              "value": "E:/AI直播素材/不要乱存和删这个文件_剪辑视频/obs直播视频/8米108颗项链"
+            }
+          ],
+          "shuffle": true
+        },
+        "properties": {}
+      }
+    ],
+    "6米项链108颗": [
+      {
+        "item_id": 2,
+        "source_name": "图像 7",
+        "source_type": "image_source",
+        "source_kind": null,
+        "enabled": true,
+        "visible": true,
+        "settings": {
+          "file": "E:/AI直播素材/不要乱存和删这个文件_剪辑视频/底图.png"
+        },
+        "properties": {}
+      },
+      {
+        "item_id": 3,
+        "source_name": "6米多",
+        "source_type": "vlc_source",
+        "source_kind": null,
+        "enabled": true,
+        "visible": true,
+        "settings": {
+          "playlist": [
+            {
+              "hidden": false,
+              "selected": false,
+              "uuid": "090f8163-312d-4aa3-8d84-f4d5c29f40b2",
+              "value": "E:/AI直播素材/不要乱存和删这个文件_剪辑视频/obs直播视频/6米108颗项链"
+            }
+          ]
+        },
+        "properties": {}
+      }
+    ],
+    "4多圈": [
+      {
+        "item_id": 3,
+        "source_name": "图像 6",
+        "source_type": "image_source",
+        "source_kind": null,
+        "enabled": true,
+        "visible": true,
+        "settings": {
+          "file": "E:/AI直播素材/不要乱存和删这个文件_剪辑视频/底图.png"
+        },
+        "properties": {}
+      },
+      {
+        "item_id": 2,
+        "source_name": "4多",
+        "source_type": "vlc_source",
+        "source_kind": null,
+        "enabled": true,
+        "visible": true,
+        "settings": {
+          "playlist": [
+            {
+              "hidden": false,
+              "selected": false,
+              "uuid": "cad94cdb-afdf-469a-85c1-191100744427",
+              "value": "E:/AI直播素材/不要乱存和删这个文件_剪辑视频/obs直播视频/卡4多圈"
+            }
+          ]
+        },
+        "properties": {}
+      }
+    ],
+    "14": [
+      {
+        "item_id": 3,
+        "source_name": "图像 5",
+        "source_type": "image_source",
+        "source_kind": null,
+        "enabled": true,
+        "visible": true,
+        "settings": {
+          "file": "E:/AI直播素材/不要乱存和删这个文件_剪辑视频/底图.png"
+        },
+        "properties": {}
+      },
+      {
+        "item_id": 2,
+        "source_name": "14米",
+        "source_type": "vlc_source",
+        "source_kind": null,
+        "enabled": true,
+        "visible": true,
+        "settings": {
+          "playlist": [
+            {
+              "hidden": false,
+              "selected": false,
+              "uuid": "cde69913-43c9-460b-ac1d-d790e3a830cc",
+              "value": "E:/AI直播素材/不要乱存和删这个文件_剪辑视频/obs直播视频/卡14白水"
+            }
+          ]
+        },
+        "properties": {}
+      }
+    ],
+    "12": [
+      {
+        "item_id": 3,
+        "source_name": "图像 4",
+        "source_type": "image_source",
+        "source_kind": null,
+        "enabled": true,
+        "visible": true,
+        "settings": {
+          "file": "E:/AI直播素材/不要乱存和删这个文件_剪辑视频/底图.png"
+        },
+        "properties": {}
+      },
+      {
+        "item_id": 2,
+        "source_name": "12米",
+        "source_type": "vlc_source",
+        "source_kind": null,
+        "enabled": true,
+        "visible": true,
+        "settings": {
+          "playlist": [
+            {
+              "hidden": false,
+              "selected": false,
+              "uuid": "68018d57-9520-4594-a0ab-0707ff68075f",
+              "value": "E:/AI直播素材/不要乱存和删这个文件_剪辑视频/obs直播视频/卡12白水"
+            }
+          ],
+          "shuffle": true
+        },
+        "properties": {}
+      }
+    ],
+    "10": [
+      {
+        "item_id": 3,
+        "source_name": "图像 3",
+        "source_type": "image_source",
+        "source_kind": null,
+        "enabled": true,
+        "visible": true,
+        "settings": {
+          "file": "E:/AI直播素材/不要乱存和删这个文件_剪辑视频/底图.png"
+        },
+        "properties": {}
+      },
+      {
+        "item_id": 2,
+        "source_name": "10米",
+        "source_type": "vlc_source",
+        "source_kind": null,
+        "enabled": true,
+        "visible": true,
+        "settings": {
+          "playlist": [
+            {
+              "hidden": false,
+              "selected": false,
+              "uuid": "a78d38aa-b175-474e-9b03-db4d2382090c",
+              "value": "E:/AI直播素材/不要乱存和删这个文件_剪辑视频/obs直播视频/卡10白水"
+            }
+          ]
+        },
+        "properties": {}
+      }
+    ],
+    "8": [
+      {
+        "item_id": 4,
+        "source_name": "图像 2",
+        "source_type": "image_source",
+        "source_kind": null,
+        "enabled": true,
+        "visible": true,
+        "settings": {
+          "file": "E:/AI直播素材/不要乱存和删这个文件_剪辑视频/底图.png"
+        },
+        "properties": {}
+      },
+      {
+        "item_id": 3,
+        "source_name": "8米",
+        "source_type": "vlc_source",
+        "source_kind": null,
+        "enabled": true,
+        "visible": true,
+        "settings": {
+          "playlist": [
+            {
+              "hidden": false,
+              "selected": false,
+              "uuid": "6a46fed1-bffb-4bb1-99d0-a1d1c2327bf2",
+              "value": "E:/AI直播素材/不要乱存和删这个文件_剪辑视频/obs直播视频/卡8白水"
+            }
+          ],
+          "shuffle": true
+        },
+        "properties": {}
+      }
+    ],
+    "6": [
+      {
+        "item_id": 3,
+        "source_name": "图像",
+        "source_type": "image_source",
+        "source_kind": null,
+        "enabled": true,
+        "visible": true,
+        "settings": {
+          "file": "E:/AI直播素材/不要乱存和删这个文件_剪辑视频/底图.png"
+        },
+        "properties": {}
+      },
+      {
+        "item_id": 2,
+        "source_name": "6米",
+        "source_type": "vlc_source",
+        "source_kind": null,
+        "enabled": true,
+        "visible": true,
+        "settings": {
+          "playlist": [
+            {
+              "hidden": false,
+              "selected": false,
+              "uuid": "09701f89-23f6-4d19-a9af-72729a242fc9",
+              "value": "E:/AI直播素材/不要乱存和删这个文件_剪辑视频/obs直播视频/卡6白水"
+            }
+          ],
+          "shuffle": true
+        },
+        "properties": {}
+      }
+    ],
+    "默认": [
+      {
+        "item_id": 2,
+        "source_name": "底图",
+        "source_type": "image_source",
+        "source_kind": null,
+        "enabled": true,
+        "visible": true,
+        "settings": {
+          "file": "E:/AI直播素材/不要乱存和删这个文件_剪辑视频/底图.png"
+        },
+        "properties": {}
+      },
+      {
+        "item_id": 1,
+        "source_name": "默认视频",
+        "source_type": "vlc_source",
+        "source_kind": null,
+        "enabled": true,
+        "visible": true,
+        "settings": {
+          "playlist": [
+            {
+              "hidden": false,
+              "selected": false,
+              "uuid": "ee8129ee-01ae-4a6b-b030-34fe8dffd3f2",
+              "value": "E:/AI直播素材/不要乱存和删这个文件_剪辑视频"
+            }
+          ],
+          "shuffle": true,
+          "subtitle_enable": false
+        },
+        "properties": {}
+      }
+    ]
+  },
+  "vlc_sources": {
+    "默认视频": {
+      "source_name": "默认视频",
+      "source_type": "vlc_source",
+      "settings": {
+        "playlist": [
+          {
+            "hidden": false,
+            "selected": false,
+            "uuid": "ee8129ee-01ae-4a6b-b030-34fe8dffd3f2",
+            "value": "E:/AI直播素材/不要乱存和删这个文件_剪辑视频"
+          }
+        ],
+        "shuffle": true,
+        "subtitle_enable": false
+      },
+      "playlist": [
+        {
+          "index": 0,
+          "path": "E:/AI直播素材/不要乱存和删这个文件_剪辑视频",
+          "name": "不要乱存和删这个文件_剪辑视频",
+          "selected": false,
+          "hidden": false
+        }
+      ],
+      "current_item": null,
+      "current_index": -1,
+      "status": "unknown",
+      "duration": 0,
+      "position": 0,
+      "loop": false,
+      "shuffle": true,
+      "playback_behavior": "stop_restart",
+      "network_caching": 400
+    },
+    "6米": {
+      "source_name": "6米",
+      "source_type": "vlc_source",
+      "settings": {
+        "playlist": [
+          {
+            "hidden": false,
+            "selected": false,
+            "uuid": "09701f89-23f6-4d19-a9af-72729a242fc9",
+            "value": "E:/AI直播素材/不要乱存和删这个文件_剪辑视频/obs直播视频/卡6白水"
+          }
+        ],
+        "shuffle": true
+      },
+      "playlist": [
+        {
+          "index": 0,
+          "path": "E:/AI直播素材/不要乱存和删这个文件_剪辑视频/obs直播视频/卡6白水",
+          "name": "卡6白水",
+          "selected": false,
+          "hidden": false
+        }
+      ],
+      "current_item": null,
+      "current_index": -1,
+      "status": "unknown",
+      "duration": 0,
+      "position": 0,
+      "loop": false,
+      "shuffle": true,
+      "playback_behavior": "stop_restart",
+      "network_caching": 400
+    },
+    "8米": {
+      "source_name": "8米",
+      "source_type": "vlc_source",
+      "settings": {
+        "playlist": [
+          {
+            "hidden": false,
+            "selected": false,
+            "uuid": "6a46fed1-bffb-4bb1-99d0-a1d1c2327bf2",
+            "value": "E:/AI直播素材/不要乱存和删这个文件_剪辑视频/obs直播视频/卡8白水"
+          }
+        ],
+        "shuffle": true
+      },
+      "playlist": [
+        {
+          "index": 0,
+          "path": "E:/AI直播素材/不要乱存和删这个文件_剪辑视频/obs直播视频/卡8白水",
+          "name": "卡8白水",
+          "selected": false,
+          "hidden": false
+        }
+      ],
+      "current_item": null,
+      "current_index": -1,
+      "status": "unknown",
+      "duration": 0,
+      "position": 0,
+      "loop": false,
+      "shuffle": true,
+      "playback_behavior": "stop_restart",
+      "network_caching": 400
+    },
+    "10米": {
+      "source_name": "10米",
+      "source_type": "vlc_source",
+      "settings": {
+        "playlist": [
+          {
+            "hidden": false,
+            "selected": false,
+            "uuid": "a78d38aa-b175-474e-9b03-db4d2382090c",
+            "value": "E:/AI直播素材/不要乱存和删这个文件_剪辑视频/obs直播视频/卡10白水"
+          }
+        ]
+      },
+      "playlist": [
+        {
+          "index": 0,
+          "path": "E:/AI直播素材/不要乱存和删这个文件_剪辑视频/obs直播视频/卡10白水",
+          "name": "卡10白水",
+          "selected": false,
+          "hidden": false
+        }
+      ],
+      "current_item": null,
+      "current_index": -1,
+      "status": "unknown",
+      "duration": 0,
+      "position": 0,
+      "loop": false,
+      "shuffle": false,
+      "playback_behavior": "stop_restart",
+      "network_caching": 400
+    },
+    "12米": {
+      "source_name": "12米",
+      "source_type": "vlc_source",
+      "settings": {
+        "playlist": [
+          {
+            "hidden": false,
+            "selected": false,
+            "uuid": "68018d57-9520-4594-a0ab-0707ff68075f",
+            "value": "E:/AI直播素材/不要乱存和删这个文件_剪辑视频/obs直播视频/卡12白水"
+          }
+        ],
+        "shuffle": true
+      },
+      "playlist": [
+        {
+          "index": 0,
+          "path": "E:/AI直播素材/不要乱存和删这个文件_剪辑视频/obs直播视频/卡12白水",
+          "name": "卡12白水",
+          "selected": false,
+          "hidden": false
+        }
+      ],
+      "current_item": null,
+      "current_index": -1,
+      "status": "unknown",
+      "duration": 0,
+      "position": 0,
+      "loop": false,
+      "shuffle": true,
+      "playback_behavior": "stop_restart",
+      "network_caching": 400
+    },
+    "14米": {
+      "source_name": "14米",
+      "source_type": "vlc_source",
+      "settings": {
+        "playlist": [
+          {
+            "hidden": false,
+            "selected": false,
+            "uuid": "cde69913-43c9-460b-ac1d-d790e3a830cc",
+            "value": "E:/AI直播素材/不要乱存和删这个文件_剪辑视频/obs直播视频/卡14白水"
+          }
+        ]
+      },
+      "playlist": [
+        {
+          "index": 0,
+          "path": "E:/AI直播素材/不要乱存和删这个文件_剪辑视频/obs直播视频/卡14白水",
+          "name": "卡14白水",
+          "selected": false,
+          "hidden": false
+        }
+      ],
+      "current_item": null,
+      "current_index": -1,
+      "status": "unknown",
+      "duration": 0,
+      "position": 0,
+      "loop": false,
+      "shuffle": false,
+      "playback_behavior": "stop_restart",
+      "network_caching": 400
+    },
+    "4多": {
+      "source_name": "4多",
+      "source_type": "vlc_source",
+      "settings": {
+        "playlist": [
+          {
+            "hidden": false,
+            "selected": false,
+            "uuid": "cad94cdb-afdf-469a-85c1-191100744427",
+            "value": "E:/AI直播素材/不要乱存和删这个文件_剪辑视频/obs直播视频/卡4多圈"
+          }
+        ]
+      },
+      "playlist": [
+        {
+          "index": 0,
+          "path": "E:/AI直播素材/不要乱存和删这个文件_剪辑视频/obs直播视频/卡4多圈",
+          "name": "卡4多圈",
+          "selected": false,
+          "hidden": false
+        }
+      ],
+      "current_item": null,
+      "current_index": -1,
+      "status": "unknown",
+      "duration": 0,
+      "position": 0,
+      "loop": false,
+      "shuffle": false,
+      "playback_behavior": "stop_restart",
+      "network_caching": 400
+    },
+    "6米多": {
+      "source_name": "6米多",
+      "source_type": "vlc_source",
+      "settings": {
+        "playlist": [
+          {
+            "hidden": false,
+            "selected": false,
+            "uuid": "090f8163-312d-4aa3-8d84-f4d5c29f40b2",
+            "value": "E:/AI直播素材/不要乱存和删这个文件_剪辑视频/obs直播视频/6米108颗项链"
+          }
+        ]
+      },
+      "playlist": [
+        {
+          "index": 0,
+          "path": "E:/AI直播素材/不要乱存和删这个文件_剪辑视频/obs直播视频/6米108颗项链",
+          "name": "6米108颗项链",
+          "selected": false,
+          "hidden": false
+        }
+      ],
+      "current_item": null,
+      "current_index": -1,
+      "status": "unknown",
+      "duration": 0,
+      "position": 0,
+      "loop": false,
+      "shuffle": false,
+      "playback_behavior": "stop_restart",
+      "network_caching": 400
+    },
+    "VLC 视频源": {
+      "source_name": "VLC 视频源",
+      "source_type": "vlc_source",
+      "settings": {
+        "playlist": [
+          {
+            "hidden": false,
+            "selected": false,
+            "uuid": "84b66ac0-802e-47ab-9841-f0e19a275798",
+            "value": "E:/AI直播素材/不要乱存和删这个文件_剪辑视频/obs直播视频/8米108颗项链"
+          }
+        ],
+        "shuffle": true
+      },
+      "playlist": [
+        {
+          "index": 0,
+          "path": "E:/AI直播素材/不要乱存和删这个文件_剪辑视频/obs直播视频/8米108颗项链",
+          "name": "8米108颗项链",
+          "selected": false,
+          "hidden": false
+        }
+      ],
+      "current_item": null,
+      "current_index": -1,
+      "status": "unknown",
+      "duration": 0,
+      "position": 0,
+      "loop": false,
+      "shuffle": true,
+      "playback_behavior": "stop_restart",
+      "network_caching": 400
+    }
+  },
+  "summary": {
+    "total_scenes": 9,
+    "total_sources": 18,
+    "vlc_sources_count": 9
+  }
+}

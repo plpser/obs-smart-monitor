@@ -79,15 +79,8 @@ class SourceManager:
                     except Exception as e:
                         print(f"⚠️ 获取源 {item.get('sourceName')} 设置失败: {e}")
                     
-                    # 获取源属性
-                    try:
-                        props_resp = self.obs_client.get_input_properties_list_property_items(
-                            item.get('sourceName'), 'playlist'
-                        )
-                        source_info['properties'] = props_resp.__dict__ if hasattr(props_resp, '__dict__') else {}
-                    except Exception as e:
-                        # 不是所有源都有playlist属性，这是正常的
-                        pass
+                    # 不再尝试获取所有源的属性，避免API错误
+                    # 只有在特定需要时才获取VLC源的播放列表属性
                     
                     sources.append(source_info)
                 
