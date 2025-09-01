@@ -9,7 +9,7 @@
     "scene_settings": {
         "default_scene": "默认",
         "switch_duration": 120,
-        "switch_delay": 5,
+        "switch_delay": 10,
         "scenes": {
             "1": {
                 "场景名称": "8米项链108颗",
