@@ -233,8 +233,116 @@ class OBSManager:
             print(f"❌ 切换场景失败: {e}")
             return False
     
+    def _find_nearest_scene(self, number_str):
+        """
+        智能场景映射：当没有精确匹配的场景时，找到最接近的可用场景
+        映射规则：
+        - 14.5 → 14（没有14.5场景）
+        - [12, 14) → 12
+        - [10, 12) → 10  
+        - [8, 10) → 8
+        - [6, 8) → 6
+        - <6 → 6（最小场景）
+        
+        :param number_str: 输入的数字字符串
+        :return: 映射后的场景切换命令或None
+        """
+        try:
+            input_number = float(number_str)
+            
+            # 定义可用的场景范围（从配置中获取实际可用的数字场景）
+            scenes = self.config["scene_settings"]["scenes"]
+            available_scenes = []
+            
+            for scene_id, scene_info in scenes.items():
+                if scene_info.get("enabled", True):
+                    # 获取场景的数字值
+                    switch_cmd = scene_info.get("切换命令", str(scene_info.get("number", "")))
+                    try:
+                        # 只考虑纯数字的场景（不包括116、114等特殊场景，不包括9默认场景）
+                        scene_num = float(switch_cmd)
+                        # 只包括6、8、10、12、14这些数字场景
+                        if switch_cmd in ['6', '8', '10', '12', '14'] and switch_cmd == str(int(scene_num)):
+                            available_scenes.append((scene_num, switch_cmd))
+                    except (ValueError, TypeError):
+                        continue
+            
+            # 按数字大小排序
+            available_scenes.sort()
+            
+            if not available_scenes:
+                return None
+            
+            # 智能映射逻辑
+            print(f"🔍 智能场景映射：输入数字 {input_number}")
+            
+            # 首先检查是否有精确匹配
+            for scene_num, switch_cmd in available_scenes:
+                if scene_num == input_number:
+                    print(f"✅ 找到精确匹配场景: {switch_cmd}")
+                    return switch_cmd
+            
+            # 没有精确匹配，进行智能映射
+            # 按照映射规则找到合适的场景
+            mapped_scene = None
+            
+            if input_number >= 14:
+                # >= 14 映射到 14
+                for scene_num, switch_cmd in reversed(available_scenes):
+                    if scene_num >= 14:
+                        mapped_scene = switch_cmd
+                        break
+                if not mapped_scene:
+                    # 如果没有14，找最大的可用场景
+                    mapped_scene = available_scenes[-1][1]
+                    
+            elif input_number >= 12:
+                # [12, 14) 映射到 12
+                for scene_num, switch_cmd in available_scenes:
+                    if scene_num >= 12:
+                        mapped_scene = switch_cmd
+                        break
+                        
+            elif input_number >= 10:
+                # [10, 12) 映射到 10
+                for scene_num, switch_cmd in available_scenes:
+                    if scene_num >= 10:
+                        mapped_scene = switch_cmd
+                        break
+                        
+            elif input_number >= 8:
+                # [8, 10) 映射到 8
+                for scene_num, switch_cmd in available_scenes:
+                    if scene_num >= 8:
+                        mapped_scene = switch_cmd
+                        break
+                        
+            elif input_number >= 6:
+                # [6, 8) 映射到 6
+                for scene_num, switch_cmd in available_scenes:
+                    if scene_num >= 6:
+                        mapped_scene = switch_cmd
+                        break
+            else:
+                # <6 映射到 6（最小场景）
+                for scene_num, switch_cmd in available_scenes:
+                    if scene_num >= 6:
+                        mapped_scene = switch_cmd
+                        break
+                        
+            if mapped_scene:
+                print(f"🎯 智能映射结果: {input_number} → {mapped_scene}")
+                return mapped_scene
+            else:
+                print(f"❌ 无法找到合适的映射场景")
+                return None
+                
+        except (ValueError, TypeError):
+            # 如果不是有效数字，返回None
+            return None
+    
     def switch_scene_by_number(self, number, user_content=""):
-        """根据数字切换场景（支持延迟切换）"""
+        """根据数字切换场景（支持延迟切换和智能映射）"""
         if not self.config:
             print("❌ 配置文件未加载")
             return False
@@ -254,9 +362,11 @@ class OBSManager:
             # 查找对应的场景
             scenes = self.config["scene_settings"]["scenes"]
             target_scene = None
+            final_number = number  # 用于记录的最终数字
             
+            # 首先尝试精确匹配
             for scene_id, scene_info in scenes.items():
-                # 支持新格式：通过“切换命令”匹配
+                # 支持新格式：通过"切换命令"匹配
                 if "切换命令" in scene_info and scene_info["切换命令"] == str(number) and scene_info.get("enabled", True):
                     target_scene = scene_info.get("场景名称", scene_info.get("name"))
                     break
@@ -271,8 +381,19 @@ class OBSManager:
                         # 如果number不能转换为整数，跳过这个匹配
                         continue
             
+            # 如果没有精确匹配，尝试智能映射
             if not target_scene:
-                print(f"❌ 未找到切换命令 {number} 对应的场景")
+                mapped_number = self._find_nearest_scene(str(number))
+                if mapped_number:
+                    # 使用映射后的数字再次查找场景
+                    for scene_id, scene_info in scenes.items():
+                        if "切换命令" in scene_info and scene_info["切换命令"] == str(mapped_number) and scene_info.get("enabled", True):
+                            target_scene = scene_info.get("场景名称", scene_info.get("name"))
+                            final_number = mapped_number  # 更新最终数字为映射后的值
+                            break
+            
+            if not target_scene:
+                print(f"❌ 未找到切换命令 {number} 对应的场景（包括智能映射）")
                 return False
             
             # 获取延迟参数
@@ -282,13 +403,13 @@ class OBSManager:
                 print(f"⏰ 检测到切换命令 {number}，{delay_seconds}秒后切换到场景: {target_scene}")
                 
                 # 设置延迟定时器
-                self.delay_timer = threading.Timer(delay_seconds, self._delayed_switch, args=[target_scene, number, user_content])
+                self.delay_timer = threading.Timer(delay_seconds, self._delayed_switch, args=[target_scene, final_number, user_content])
                 self.delay_timer.start()
                 
                 return True
             else:
                 # 无延迟，直接切换
-                return self._delayed_switch(target_scene, number, user_content)
+                return self._delayed_switch(target_scene, final_number, user_content)
     
     def _delayed_switch(self, target_scene, number, user_content=""):
         """延迟切换的实际执行方法"""
